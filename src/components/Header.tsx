@@ -9,9 +9,9 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 import { useDebounce } from '../utils/debounce'
-import { getUserData, logout } from '../utils/storage'
-import { loginPopup, notify, searchNowAction } from '../redux/actions'
-import { MenuList } from '@mui/material'
+import { getUserData } from '../utils/storage'
+import { notify, searchNowAction } from '../redux/actions'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import ProductBar from './ProductBar'
@@ -114,7 +114,7 @@ export default function Header(){
                 <div className='icons'>
                     <div id="icon" className='icon' onClick={(event:any)=>cartItem.totalCartItems>0?setAnchorCartMenu(event.currentTarget):setAnchorCartMenu(null)}>
                         <Badge id="icon" anchorOrigin={{vertical: 'bottom',horizontal: 'left'}} badgeContent={cart.cartItems.length?cartItem.totalCartItems:0} color="primary">
-                            <img id="icon" src='/images/cart.svg' />
+                           <ShoppingCartIcon />
                         </Badge>
                         <div>
 
