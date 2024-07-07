@@ -1,0 +1,10 @@
+.productContainer{
+    display: flex;
+    gap: 20;
+}
+
+.productTile{
+    margin-inline: 10px;
+    margin-block: 20px;
+    max-width: 220px;
+}

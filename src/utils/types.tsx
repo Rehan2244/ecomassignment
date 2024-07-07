@@ -1,0 +1,87 @@
+import { IToastState } from "../redux/actions"
+
+export interface IStore{}
+
+export interface RootState{
+    cartReducers:ICartReducers,
+    buyNowReducers:IBuyNowReducers,
+    searchReducer:ISearcReducers,
+    loginReducer:ILoginPopup,
+    loadingReducer:ILoading,
+    toastReducer:IToastState
+}
+
+export interface ImagesInterface{
+    data:ImageDataInterface[]
+}
+export interface ImageDataInterface{
+    attributes:ImageDataAttributeInterface
+}
+
+export interface ImageDataAttributeInterface{
+    url:string
+}
+export interface IProduct{
+    img:string
+    name:string,
+    brand:string,
+    price:string,
+    qty:number,
+    id:number | string,
+    images?:ImagesInterface,
+    detail?:string,
+    mrp:string,
+    offer?:IOffer
+}
+
+export interface ICartReducers{
+    cartItems:IProduct[]
+    totalCartItems:number
+}
+
+export interface IWishlistReducers{
+    totalWLItems:string[],
+    wishlistReducers:any[]
+}
+
+export interface IBuyNowReducers{
+    buyNowItems:IProduct
+}
+
+export interface ISearcReducers{
+    searchKey:string
+}
+
+
+export interface IProductTile{
+    imgSrc:ImagesInterface,
+    name:string,
+    brand:string,
+    price:string,
+    mrp:string,
+    offer?:IOffer,
+    btnText:string,
+    productId:string|number,
+    className:string
+}
+
+export interface IOffer{
+
+}
+export interface Image{
+    url:string
+}
+
+
+export interface INotification{
+    type:string,
+    message:string
+}
+export interface ILoading{
+    type:string,
+    loading:boolean
+}
+export interface ILoginPopup{
+    type:string,
+    popupenabled:boolean
+}

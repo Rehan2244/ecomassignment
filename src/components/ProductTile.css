@@ -1,0 +1,111 @@
+.productTile{
+    border: 1px solid #E9E9E9;
+}
+
+.addCartBtn{
+    background-color: #E44141;
+    color:white;
+    font-weight: 600;
+    font-size: 1em;
+    border: 0;
+    padding: 7px ;
+    width: 100%;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.image img{
+    width: auto;
+    mix-blend-mode: multiply;
+    max-height: 120px;
+    margin: auto;
+  /* filter: contrast(1); */
+}
+.image{
+    background:#E9E9E9;
+}
+
+.detail{
+    padding: 10px;
+    /* line-height: 1.5; */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.name{
+    font-size: 1rem;
+    font-weight: 600;
+    color:#656464;
+}
+.brand{
+    font-size: 0.75rem;
+    color: #696969;
+}
+.price{
+    font-size: 1.125rem;
+    font-family: 'InterBold';
+    font-weight: 800;
+    /* margin-top:3px; */
+}
+
+.mrp{
+  display: flex;  
+}
+.mrpPrice{
+    color:#B8B8B8;
+    text-decoration: line-through;
+}
+.offer{
+    color: #31DC42;
+    background-color: #E2FFE5;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left:10px;
+}
+
+.addToCart{
+    margin-top:7px;
+}
+.addCartBtn img{
+    width: 1.3em;
+}
+
+.productBar{
+    display: flex;
+    padding-inline: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e3e3e3;
+    min-width: 340px;
+}
+
+.productBar.Checkout{
+    padding-top: 20px;
+}
+.productBar.MiniCart .name{
+    font-weight: 800;
+}
+.productBar .productSpanBlock{
+    margin-left: 20px;
+}
+.productBar .buyingQty{
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: right;
+}
+
+.productBar img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.productSpanBlock span{
+    display: block;
+}

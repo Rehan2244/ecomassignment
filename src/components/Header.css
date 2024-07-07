@@ -1,0 +1,81 @@
+.header{
+    background-color: #FFD464;
+    width: 100%;
+    height: 55px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.headerContainer{
+    margin: 0px 5px ;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+}
+.input{
+    display: flex;
+    background-color: white;
+    padding: 3px 10px;
+    margin:10px 5px;
+    width: 100%;
+    min-width: 200px;
+    max-width: 450px;
+    position: relative;
+}
+.input input{
+    border: 0;
+    width: 100%;
+}
+.input img{
+    width: 25px;
+    height: auto;
+}
+.icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+}
+.icons img{
+    width: 30px;
+    height: auto;
+}
+.icons .icon{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding:0px 12px;
+}
+.icons .icon:hover{
+    background-color: red;
+}
+.itemCountOnCart{
+    width: 18px;
+    height: 18px;
+    background-color: #E44141;
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    color: #fff;
+}
+.suggestionSearch{
+    position: absolute;
+    top: 37px;
+    width: 100%;
+    border-radius: 2px;
+    z-index: 2;
+    margin: auto;
+    margin-left: -10px;
+    background-color: white;
+}
+.suggestionSearch .item{
+    padding: 8px;
+    border-bottom: 1px solid #f2f2f2;
+}
+#basic-menu{
+    width: 1040px;
+}
