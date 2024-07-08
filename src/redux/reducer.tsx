@@ -7,10 +7,6 @@ const initialCartState:ICartState={
     totalCartItems:0,
 };
 
-const initialWLState:IWishListState={
-    wishListItems:[],
-    totalWLItems:0,
-}
 const cartReducers=(state=initialCartState,action:ICartAction)=>{
 
     switch(action.type){
@@ -34,13 +30,6 @@ const removeFromCart=(state=initialCartState,action:IProduct)=>{
     }
     return state;
 }
-const wishlistReducers=(state=initialWLState,action:IWishlistAction)=>{
-    switch(action.type){
-        case 'ADD_TO_WISHLIST':
-            return pushItemsToWL(state,action)
-        default:return state;
-    }
-}
 
 const pushItemsToCart=(tempState:ICartState,action:ICartAction)=>{
     let state={...tempState}
@@ -61,28 +50,6 @@ const pushItemsToCart=(tempState:ICartState,action:ICartAction)=>{
         state.cartItems.push(action.cartItems)
     }
     return state;
-}
-const pushItemsToWL=(tempState:IWishListState,action:IWishlistAction)=>{
-    let state={...tempState}
-    if(!state.wishListItems.length){
-        state.wishListItems.push(action.wishListItems)
-        state.totalWLItems++;
-        return state;
-    } else{
-        let found=false
-        state.wishListItems.forEach((el,idx)=>{
-            if(el._id==action.wishListItems._id){
-                state.wishListItems.splice(idx,1)
-                state.totalWLItems--
-                found=true;
-            }
-        })
-        if(!found){
-                state.wishListItems.push(action.wishListItems)
-                state.totalWLItems++;
-        }
-        return state;
-    }
 }
 
 
@@ -127,7 +94,6 @@ const addressPaymentReducer=(state={address:{},payment:{}},action:any)=>{
 
 export const rootReducer=combineReducers({
     cartReducers,
-    wishlistReducers,
     buyNowReducers,
     toastReducer,
     loadingReducer,

@@ -1,7 +1,6 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import './Loader.css'
-import React from 'react';
 
 interface Loader{
     fullScreen:boolean,

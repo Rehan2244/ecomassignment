@@ -18,7 +18,6 @@ import { notify } from './redux/actions';
 import { getUserData } from './utils/storage';
 import ProductListing from './screens/ProductListing';
 import { RootState } from './utils/types';
-import LoginDialog from './components/LoginDialog';
 import Auth from './screens/Auth';
 import CheckoutPage from './screens/CheckoutPage';
 import OrderSummary from './screens/OrderSummaryPage';
@@ -42,8 +41,6 @@ function App(){
 
 function RootApp({Component,IsHeadEnable}:any) {
   const loading=useSelector((state:RootState)=>state.loadingReducer.loading)
-  console.log('loading',loading)
-  const loginPopupEnabled=useSelector((state:RootState)=>(state.loginReducer.popupenabled))
   const dispatch=useDispatch()
   const navigate=useNavigate()
   useSelector((state:RootState)=>{
@@ -63,7 +60,6 @@ function RootApp({Component,IsHeadEnable}:any) {
       <CircularLoader fullScreen={true}  loading={loading} />
       { IsHeadEnable && <Header /> }
       <Component />
-      <LoginDialog isOpen={loginPopupEnabled} />
       <ToastContainer />
     </div>
   );

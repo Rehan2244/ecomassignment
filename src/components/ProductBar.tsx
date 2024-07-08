@@ -9,7 +9,7 @@ interface IProductBar{
     variant:string
 }
 const ProductBar:React.FC<IProductBar>=({product,variant})=>{
-    const imageUrl=product?.img
+    const imageUrl=product?.img || product.imagesUrl![0].url
     const dispatch=useDispatch();
     return(
         <div className={`productBar ${variant}`} style={{display:'flex'}}>

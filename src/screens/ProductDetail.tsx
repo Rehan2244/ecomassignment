@@ -39,8 +39,7 @@ export default function ProductDetail(){
     const id=searchParams.get('id')!
     const dispatch=useDispatch()
     const goToCart=()=>{
-        dispatch(buyNowProducts({...product,_id:id,qty:currentQty,img:serverUrl+currentImage}))
-        navigate('../CheckoutPage')
+        navigate('../Cart')
     }
 
     const addToCartFunction=()=>{
