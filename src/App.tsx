@@ -23,6 +23,7 @@ import CheckoutPage from './screens/CheckoutPage';
 import OrderSummary from './screens/OrderSummaryPage';
 import OrderConfirm from './screens/OrderConfirm';
 import CircularLoader from './components/Loader';
+import Filler from './components/fillProducts';
 
 const router=createBrowserRouter([
   {path:'/',element:<Navigate to={'/Home'} />},
@@ -33,6 +34,7 @@ const router=createBrowserRouter([
   {path:'/Cart',element:<RootApp Component={CheckoutPage} IsHeadEnable={true} />},
   {path:'/OrderSummary',element:<RootApp Component={OrderSummary} IsHeadEnable={true} />},
   {path:'/OrderConfirm',element:<RootApp Component={OrderConfirm} IsHeadEnable={true} />},
+  {path:'/Fill',element:<RootApp Component={Filler} IsHeadEnable={false} />},
 ])
 function App(){
   return <RouterProvider router={router} />
