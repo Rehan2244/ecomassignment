@@ -1,4 +1,4 @@
-import { ILoading, ILoginPopup, INotification, IProduct } from "../utils/types"
+import { IAdress, ILoading, ILoginPopup, INotification, IProduct } from "../utils/types"
 
 export const addToCart=(itemsToAdd:IProduct)=>{
     return {
@@ -10,7 +10,7 @@ export const addToCart=(itemsToAdd:IProduct)=>{
 export const removeFromCart=(idToRemove:string|number)=>{
     return {
         type:'REMOVE_FROM_CART',
-        id:idToRemove
+        _id:idToRemove
     }
 }
 export const addToWishlist=(itemsToAdd:IProduct)=>{
@@ -55,6 +55,17 @@ export const loginPopup = (payload:ILoginPopup) =>{
     }
 }
 
+
+interface AddressPaymentAction{
+    address:IAdress,
+    payment:any
+}
+export const addressAndPayment = (payload:AddressPaymentAction) =>{
+    return {
+        type:'AddressPayment',
+        payload
+    }
+}
 
 export interface ICartState{
     cartItems:IProduct[],

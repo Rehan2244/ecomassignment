@@ -1,0 +1,115 @@
+.addressSection,.billSection{
+    border: 1px solid #e3e3e3;
+    border-radius: 16px;
+}
+.addressSection.summaryPage .itemsList .itemText {
+    margin: 15px;
+}
+.addressSection.summaryPage {
+    padding: 0;
+}
+.addressSection{
+    flex: 0.7;
+    padding-inline: 20px;
+}
+.billSection{
+    flex: 0.3;
+}
+
+.inputField input,.inputField .select{
+    background-color: #f3f3f3;
+    border-radius: 7px;
+    border: 0;
+    padding-block: 10px;
+    padding-inline: 10px;
+}
+.inputField select{
+    background-color: #f3f3f3;
+    padding-block:0;
+}
+.label{
+    padding-block: 7px;
+    font-size: 14px;
+}
+input:active,input:focus{
+    outline: none;
+}
+.checkoutContainer{
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+.stepper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-block: 20px;
+}
+.stepper .link{
+    border: 2px dashed #e3e3e3;
+    flex: 0.35;
+}
+.stepper .step{
+    height: 42px;
+    width: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.stepper .step.active{
+    background-color: #31DC42;
+    color: white;
+}
+.stepper .step{
+    background-color: #e3e3e3;
+    color: #8C8C8C;
+}
+
+.paymentDetail{
+    line-height: 2.4;
+    padding: 24px;
+}
+.paymentDetail .flexStyle.item{
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.paymentDetail .addCartBtn{
+    margin-top: 20px;
+}
+
+.itemsList{
+    padding-block: 20px;
+}
+.districtSelect,.stateSelect{
+    background-color: #f3f3f3;
+}
+.stateSelect fieldset,.districtSelect fieldset{
+    border: 0;
+}
+#districtSelect,#stateSelect{
+    padding: 0;
+    background-color: #f3f3f3;
+    padding-inline: 10px;
+    padding-block: 10px;
+}
+.numberInput::-webkit-outer-spin-button,
+.numberInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.numberInput[type=number] {
+  -moz-appearance: textfield;
+}
+.addCartBtn:disabled{
+    background-color: #ccc;
+    color:#eee
+}
+.addressBtn:disabled{
+    background-color: #ccc!important;
+    color: #eee!important;
+}
+/* .itemsList. */

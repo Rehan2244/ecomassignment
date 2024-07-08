@@ -9,27 +9,21 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 import { useDebounce } from '../utils/debounce'
-import { getUserData } from '../utils/storage'
-import { notify, searchNowAction } from '../redux/actions'
+import { getToken, getUserData, loginHeader, logout } from '../utils/storage'
+import { loading, notify, searchNowAction } from '../redux/actions'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Search from '@mui/icons-material/Search';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import ProductBar from './ProductBar'
 import { ICartReducers, RootState } from '../utils/types'
-const formatText = (text:string,substringToBold:string) => {
-    const regex = new RegExp(`(${substringToBold})`, 'gi');
-    const parts = text.split(regex);
-
-    return parts.map((part, index) => (
-      regex.test(part) ? <span style={{fontFamily:'InterBold'}} key={index}>{part}</span> : part
-    ));
-  };
+import { Button } from '@mui/material'
 
 export default function Header(){
 
     const [anchorEl, setAnchorEl] = React.useState<any|null>(null);
     const [cartMenuAnchor, setAnchorCartMenu] = React.useState<any>(null);
-    const [visibleSuggestion,updateSugestionDisplay]=useState(false)
+
     const open = Boolean(anchorEl);
     const cartOpen = Boolean(cartMenuAnchor);
     useEffect(()=>{
@@ -60,61 +54,44 @@ export default function Header(){
         return state.cartReducers})
     let buyNowItems=useSelector((state:RootState)=>state.buyNowReducers)
     let searchReducer=useSelector((state:RootState)=>state.searchReducer)
-    const [suggestions,updateSearchSuggestions]=useState([])
+
     const [searchKey,updateSearchKey]=useState('')
     useEffect(()=>{
         updateCart(cart)
     },[cart])
-    useEffect(()=>{
-        axios.get(serverUrl+'/api/get_all_keywords')
-        .then(res=>{
-            updateSearchSuggestions(res.data)
-        })
-        .catch(err=>{})
-    },[])
+
     const handleSearch=useDebounce((e)=>{
-        axios.post(serverUrl+'/api/register_key',{search:e.target.value,id:user.id})
-        .then(res=>{
-            console.log('response is',res)
-        })
-        .catch(err=>{
-            dispatch(notify({type:'error',message:err.message}))
-        })
+        dispatch(loading({type:'Loading',loading:true}))
+
     },1500)
     const search=(e:any)=>{
-        e.preventDefault()
+        e.preventDefault();
         dispatch(searchNowAction(searchKey))
         if(!window.location.pathname.includes('search')){
             navigate('../search?key='+searchKey)
         }
-        updateSugestionDisplay(false)
         return
     }
-    useEffect(()=>{
-        if(searchReducer.searchKey){
-            console.log('Search key is updated')
-        }
-    },[searchReducer])
+    
     return(
         <div className="header">
             <div className='headerContainer'>
+                <div className='flex items-center gap-12 ml-10'>
+                    <img src='/Logopng.png' className='h-9 cursor-pointer' onClick={()=>navigate('/Home')} />
                 <div className='input'>
                     <form onSubmit={search} style={{display:'flex',alignItems:'center',width:'100%'}}>
-                        <input value={searchKey} onChange={(e)=>{if(e.target.value!='')updateSugestionDisplay(true); else updateSugestionDisplay(false);updateSearchKey(e.target.value)}} onKeyUp={(e)=>{if(e.key=='Enter' || e.key == 'Backspace') return;handleSearch(e)}} />
-                        <img src='/images/search-outline.svg' />
+                        <input value={searchKey} onChange={(e)=>{updateSearchKey(e.target.value)}} onKeyUp={(e)=>{if(e.key=='Enter' || e.key == 'Backspace') return;}} />
+                        <Search/>   
                     </form>
-                    <div className='suggestionSearch'>
-                        {suggestions.map((el:string)=>{
-                            if(searchKey!='' && el && el.includes(searchKey) && visibleSuggestion)
-                                return <div key={el} onClick={()=>{updateSearchKey(el);updateSugestionDisplay(false)}} className='item'>{formatText(el,searchKey)}</div>
-                            }
-                        )}
-                    </div>
                 </div>
-                <div className='icons'>
-                    <div id="icon" className='icon' onClick={(event:any)=>cartItem.totalCartItems>0?setAnchorCartMenu(event.currentTarget):setAnchorCartMenu(null)}>
+                </div>
+                <div className='icons cursor-pointer'>
+                    <Button style={{color:'#fff',marginRight:'30px',zIndex:99999}} onClick={()=>logout()}>Logout</Button>
+                    <div id="icon" className='icon' >
                         <Badge id="icon" anchorOrigin={{vertical: 'bottom',horizontal: 'left'}} badgeContent={cart.cartItems.length?cartItem.totalCartItems:0} color="primary">
-                           <ShoppingCartIcon />
+                            <div className='text-white'>
+                                <ShoppingCartIcon/>
+                            </div>
                         </Badge>
                         <div>
 
@@ -128,12 +105,15 @@ export default function Header(){
                                     </div>
                                     <div className='py-2 px-5'>
                                     <button  onClick={()=>{
-                                        navigate('/OrderSummary',{})
+                                        navigate('/Cart',{})
                                     }} className='addCartBtn'>CHECKOUT</button>
                                     </div>
                                 </Menu>
                         </div>
                     </div>
+                        <div id="icon" className='w-full h-full absolute' onClick={(event:any)=>cartItem.totalCartItems>0?setAnchorCartMenu(event.currentTarget):setAnchorCartMenu(null)}>
+
+                        </div>
                 </div>
             </div>
         </div>

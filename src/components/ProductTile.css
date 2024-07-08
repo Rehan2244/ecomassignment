@@ -40,6 +40,9 @@
     font-size: 1rem;
     font-weight: 600;
     color:#656464;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .brand{
     font-size: 0.75rem;
@@ -90,6 +93,16 @@
 }
 .productBar .productSpanBlock{
     margin-left: 20px;
+}
+.MuiButtonBase-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiMenuItem-root.MuiMenuItem-gutters .productSpanBlock .name{
+    max-width: 190px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.MuiButtonBase-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiMenuItem-root.MuiMenuItem-gutters .productSpanBlock {
+    max-width: 150px;
 }
 .productBar .buyingQty{
     font-size: 14px;

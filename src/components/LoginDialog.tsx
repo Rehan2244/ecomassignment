@@ -30,7 +30,6 @@ const LoginDialog=({isOpen}:{isOpen:boolean})=>{
       dispatch(loginPopup({type:'login',popupenabled:false}))
     }
     const loginNow=()=>{
-      setLoading(true)
       axios.post(serverUrl+'/api/profile/login',{email,password})
       .then(res=>{
         if(res.data.user==undefined){

@@ -4,9 +4,15 @@ import axios from 'axios'
 import { serverUrl } from "../commonVar";
 import './ProductDetails.css'
 import { useDispatch } from "react-redux";
-import { buyNowProducts, notify } from "../redux/actions";
+import { addToCart, buyNowProducts, notify } from "../redux/actions";
 import Slider from "react-slick";
 import { IProduct } from "../utils/types";
+import Check from '@mui/icons-material/CheckCircle'
+import Cart from "@mui/icons-material/ShoppingCart";
+import RightArrow from "@mui/icons-material/ChevronRight";
+import LeftArrow from "@mui/icons-material/ChevronLeft";
+import { Button } from "@mui/material";
+
 export default function ProductDetail(){
     window.addEventListener("scroll", (e) =>{
         // console.log('scrolling')
@@ -19,11 +25,9 @@ export default function ProductDetail(){
         img:'',
         price:'',
         qty:0,
-        id:'',
+        _id:'',
         mrp:'',
-        images:{
-            data:[{attributes:{url:''}}]
-        }
+        imagesUrl:[{url:''}]
     })
     const [productQty,updateQty]=useState<number[]>([])
     const [currentQty,updateCurrentQty]=useState<number>(1)
@@ -35,9 +39,14 @@ export default function ProductDetail(){
     const id=searchParams.get('id')!
     const dispatch=useDispatch()
     const goToCart=()=>{
-        dispatch(buyNowProducts({...product,id,qty:currentQty,img:serverUrl+currentImage}))
+        dispatch(buyNowProducts({...product,_id:id,qty:currentQty,img:serverUrl+currentImage}))
         navigate('../CheckoutPage')
     }
+
+    const addToCartFunction=()=>{
+        dispatch(addToCart({...product,qty:currentQty}))
+    }
+    
     const handleScroll=(e:any)=>{
         let defaultScrollTop=0;
         if(e.target.scrollTop>defaultScrollTop){
@@ -57,9 +66,8 @@ export default function ProductDetail(){
         }
     },[])
     useEffect(()=>{
-        axios.get(`${serverUrl}/api/products/${id}?populate=*`).then(res=>{
-            console.log('product is')
-            setProductDetail(res.data.data.attributes)
+        axios.get(`${serverUrl}/api/products/${id}`).then(res=>{
+            setProductDetail(res.data)
         })
         .catch(err=>{
             dispatch(notify({type:'error',message:err.message}))
@@ -77,7 +85,7 @@ export default function ProductDetail(){
     useEffect(()=>{
         if(product!=undefined){
             let qty=[]
-            updateCurrentImgae(product.images?.data[0].attributes.url!)
+            updateCurrentImgae(product.imagesUrl![0].url!)
             for(var i=1;i<=product.qty;i++){
                 qty.push(i)
             }
@@ -88,7 +96,7 @@ export default function ProductDetail(){
         customPaging: function(i:number) {
           return (
             <a>
-              <img style={{height:'40px',width:'40px'}} src={serverUrl+product.images?.data[i].attributes.url} />
+              <img style={{height:'40px',width:'40px'}} src={product.imagesUrl![i].url} />
             </a>
           );
         },
@@ -98,17 +106,19 @@ export default function ProductDetail(){
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        prevArrow:<div className="slick-next"><LeftArrow /></div>,
+        nextArrow:<div className="slick-prev"><RightArrow /></div>
       };
     return(
         <div className="productDetail">
             {product!=undefined &&
                 <div className="product">
-                {product.images &&
-                    <div className="productImages">
+                {product.imagesUrl &&
+                    <div className="productImages relative">
                         <Slider vertical={false} {...settings}>
-                            {product.images.data.map(el=>
-                                <div style={{height:'400px'}} key={el.attributes.url}>
-                                    <img src={serverUrl+el.attributes.url} style={{height:'400px',width:'100%',objectFit:'contain',margin:'auto'}} />
+                            {product.imagesUrl.map(el=>
+                                <div style={{height:'400px'}} key={el.url}>
+                                    <img src={el.url} style={{height:'400px',width:'100%',objectFit:'contain',margin:'auto'}} />
                                 </div>
                             )}
                         </Slider>
@@ -119,10 +129,10 @@ export default function ProductDetail(){
                 <div className="productDesc">
                     <div style={{lineHeight:1.3,marginBottom:'14px'}}>
                         <div className="productName">{product.name}</div>
-                        <div className="brandName">BRAND NAME HERE</div>
+                        <div className="brandName">{product.brand}</div>
                     </div>
-                    <div>price: {product.price}</div>
-                    <div>detail {product.detail}</div>
+                    <div>₹ {product.price}</div>
+                    <div>{product.detail}</div>
                     <div className="flexStyle" style={{marginBlock:'20px',fontSize:'14px'}}>
                         <select onChange={e=>{
                             let num=e.target.value as unknown as number;
@@ -137,7 +147,7 @@ export default function ProductDetail(){
                         </select>
                         {product.qty>0?
                         <div style={{color:'#31DC42',justifyContent:'center',gap:'10px'}} className="flexStyle">
-                           <div>In stock</div>  <img style={{width:'20px'}} src='/images/checkmark-circle.svg' />
+                           <div>In stock</div>  <Check />
                         </div>
                         :
                         <div>
@@ -147,9 +157,7 @@ export default function ProductDetail(){
                     </div>
                     <div style={{display:'flex',flexDirection:'column',gap:12,marginBlock:20}}>
                         <div style={{display:'flex'}}>
-                            <button className='addCartBtn' style={{background:'transparent',color:'#0009'}}>Add to Wishlist</button>
-                            <div style={{width:'2px',flex:1,border:'1px solid #0006'}}></div>
-                            <button className='addCartBtn' style={{background:'transparent',color:'#0009'}}>Add to cart</button>
+                            <Button onClick={addToCartFunction} className='addCartBtn' style={{background:'transparent',color:'#0009'}}>Add to cart <Cart/> </Button>
                         </div>
                         <button className='addCartBtn' onClick={()=>goToCart()}>BUY NOW </button>
                     </div>

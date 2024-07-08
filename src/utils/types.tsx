@@ -8,7 +8,9 @@ export interface RootState{
     searchReducer:ISearcReducers,
     loginReducer:ILoginPopup,
     loadingReducer:ILoading,
-    toastReducer:IToastState
+    toastReducer:IToastState,
+    plpProductReducer:any,
+    addressPaymentReducer:any
 }
 
 export interface ImagesInterface{
@@ -27,8 +29,8 @@ export interface IProduct{
     brand:string,
     price:string,
     qty:number,
-    id:number | string,
-    images?:ImagesInterface,
+    _id:number | string,
+    imagesUrl?:Image[],
     detail?:string,
     mrp:string,
     offer?:IOffer
@@ -54,7 +56,7 @@ export interface ISearcReducers{
 
 
 export interface IProductTile{
-    imgSrc:ImagesInterface,
+    imgSrc:Image[],
     name:string,
     brand:string,
     price:string,
@@ -84,4 +86,18 @@ export interface ILoading{
 export interface ILoginPopup{
     type:string,
     popupenabled:boolean
+}
+
+export interface IAdress{
+    fName:string,
+    lName:string
+    addressLine1:string,
+    addressLine2:string,
+    state:string,
+    district:string,
+    pincode:string,
+    mobile:string,
+    email:string,
+    userId:string,
+    isPrimary?:boolean
 }

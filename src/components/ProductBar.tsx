@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux"
 import { serverUrl } from "../commonVar"
 import { removeFromCart } from "../redux/actions";
 import { IProduct } from "../utils/types";
+import Trash from '@mui/icons-material/Delete';
 
 interface IProductBar{
     product:IProduct,
@@ -9,7 +10,6 @@ interface IProductBar{
 }
 const ProductBar:React.FC<IProductBar>=({product,variant})=>{
     const imageUrl=product?.img
-    console.log('Product',product)
     const dispatch=useDispatch();
     return(
         <div className={`productBar ${variant}`} style={{display:'flex'}}>
@@ -22,7 +22,7 @@ const ProductBar:React.FC<IProductBar>=({product,variant})=>{
                 </div>
                 <div className="buyingQty">
                     <div>{'X '+product.qty}</div>
-                    <div onClick={()=>dispatch(removeFromCart(product.id))}>Remove</div>
+                    {variant!=='MiniCart' && <div className="cursor-pointer flex items-center" onClick={()=>dispatch(removeFromCart(product._id))}>Remove <Trash className="text-red-400 " fontSize="small" /> </div>}
                 </div>
             </div>
         </div>

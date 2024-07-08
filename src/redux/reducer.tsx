@@ -23,9 +23,10 @@ const cartReducers=(state=initialCartState,action:ICartAction)=>{
 }
 
 const removeFromCart=(state=initialCartState,action:IProduct)=>{
-    if (state.cartItems.find(item => item.id == action.id)) {
+    console.log('remove',state.cartItems,action)
+    if (state.cartItems.find(item => item._id == action._id)) {
         state.cartItems.forEach((item,index) => {
-            if (item.id == action.id) {
+            if (item._id == action._id) {
                 state.totalCartItems-=item.qty;
                 state.cartItems.splice(index,1)
             }
@@ -45,10 +46,10 @@ const pushItemsToCart=(tempState:ICartState,action:ICartAction)=>{
     let state={...tempState}
     state.totalCartItems++;
     if(state.cartItems.length){
-        console.log('length',state.cartItems.find((item:IProduct)=>item.id==action.cartItems.id))
-        if(state.cartItems.find((item:IProduct)=>item.id==action.cartItems.id)){
+        console.log('length',state.cartItems.find((item:IProduct)=>item._id==action.cartItems._id))
+        if(state.cartItems.find((item:IProduct)=>item._id==action.cartItems._id)){
             state.cartItems.find((item:IProduct)=>{
-                if(item.id==action.cartItems.id){
+                if(item._id==action.cartItems._id){
                     item.qty+=1
                 }
             })
@@ -70,7 +71,7 @@ const pushItemsToWL=(tempState:IWishListState,action:IWishlistAction)=>{
     } else{
         let found=false
         state.wishListItems.forEach((el,idx)=>{
-            if(el.id==action.wishListItems.id){
+            if(el._id==action.wishListItems._id){
                 state.wishListItems.splice(idx,1)
                 state.totalWLItems--
                 found=true;
@@ -107,7 +108,7 @@ const loginReducer=(state=loginState,action:ILoginPopupActionState)=>{
 }
 const loadingState:ILoadingState={
     type:'loading',
-    loading:true
+    loading:false
 }
 const loadingReducer=(state=loadingState,action:ILoadingAction)=>{
     return action.loading!==undefined? action.loading:state
@@ -119,6 +120,11 @@ const searchState:ISearchState={
 const searchReducer=(state=searchState,action:ISearchAction)=>{
     return {type:'search',searchKey:action.searchKey}
 }
+
+const addressPaymentReducer=(state={address:{},payment:{}},action:any)=>{
+    return {type:'AddressPayment',addressPayment:action.payload}
+}
+
 export const rootReducer=combineReducers({
     cartReducers,
     wishlistReducers,
@@ -126,5 +132,6 @@ export const rootReducer=combineReducers({
     toastReducer,
     loadingReducer,
     loginReducer,
-    searchReducer
+    searchReducer,
+    addressPaymentReducer
 })

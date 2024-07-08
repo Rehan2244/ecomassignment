@@ -6,17 +6,23 @@ const productRoutes = require('./routes/products');
 const addressRoutes = require('./routes/addresses');
 const orderRoutes = require('./routes/orders');
 const paymentRoutes = require('./routes/payments');
-
+const cors=require('cors')
 require('dotenv').config();
+
+const corsConfig={
+  origin:process.env.CLIENT,
+  optionsSuccessStatus: 200
+}
 
 const app = express();
   
 mongoose
-  .connect('mongodb://localhost:27017/user-auth', { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.SERVER, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('DB Connected'))
   .catch((err) => console.error(err));
-
+  
 app.use(bodyParser.json());
+app.use(cors(corsConfig))
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);

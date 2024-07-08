@@ -20,25 +20,29 @@ const OrderSummary=()=>{
     }
     },[])
 
-    useEffect(()=>{
-        
-    },[currentProducts])
+    const {addressPayment}=useSelector((state:RootState)=>state.addressPaymentReducer)
+
     return(
         <div className="checkoutContainer">
-            <div className="addressSection summaryPage">
+            {currentProducts.length ?<div className="addressSection summaryPage">
                 <div className="itemsList">
                     <div className="itemText">Items</div>
                     {currentProducts.map(el=>(
-                        <div key={el.id}>
+                        <div key={el._id}>
                             <ProductBar product={el} variant={'Checkout'} />
                         </div>
                     ))}
+                    </div>
                 </div>
-                <div className="address"></div>
-            </div>
-            <div className="billSection">
-                <OrderSummaryComponent disabled={false} activeStep={3} />
-            </div>
+                :
+                    <div className="flex justify-center items-center pt-4 flex-col h-full w-full absolute">
+                        <h2>There is not item in your cart right now</h2>
+                        <h4>Browse or search to add now</h4>
+                    </div>
+                }
+            {!!currentProducts.length && <div className="billSection">
+                <OrderSummaryComponent disabled={false} activeStep={3} address={addressPayment?.address!} paymentType={addressPayment?.payment!} />
+            </div>}
         </div>
     )
 }

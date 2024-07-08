@@ -3,7 +3,7 @@ import { serverUrl } from "../commonVar";
 
 export async function getAllProductDetails(){
     let data;
-    await axios.get(serverUrl+'/api/product/getall',{}).then(async (res)=>{
+    await axios.get(serverUrl+'/api/products',{}).then(async (res)=>{
         data=await res.data
         // return await res.data;
     })

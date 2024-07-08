@@ -14,6 +14,7 @@ export default function CircularLoader({fullScreen,loading}:Loader) {
     if(!loading){
         document.body.style.overflow = "scroll"
     }
+  if(!loading) return null;
   return fullScreen?
     <div className='fullScreenContainer'>
         <Box sx={{ display: 'flex' }}>

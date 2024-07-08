@@ -1,10 +1,16 @@
 .productContainer{
     display: flex;
     gap: 20;
+    flex-wrap: wrap;
+}
+.productContainer .name.bold{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .productTile{
     margin-inline: 10px;
     margin-block: 20px;
-    max-width: 220px;
+    width: 220px;
 }

@@ -6,18 +6,21 @@ import { loading, notify } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { IProduct } from "../utils/types";
 import { IComponent } from "../utils/component-types";
+import { getUserData } from "../utils/storage";
+import { useNavigate } from "react-router-dom";
 
 const Home:React.FC<IComponent>=({isHeaderEnabled})=>{
+
   const [product,updateProducts]=useState<IProduct[]>([])
+  const userData={id:1}
+  const navigate=useNavigate()
 
   let dispatch=useDispatch()
   useEffect(()=>{
     const response=getAllProductDetails()
     response.then((res:any)=>{
-      updateProducts(res?.products!)
-      setTimeout(()=>{
-        dispatch(loading({type:'loading',loading:false}))
-      },1500)
+      updateProducts(res!)
+      dispatch(loading({type:'loading',loading:false}))
     })
     .catch(err=>{
       dispatch(notify({type:'error',message:err.message}))
@@ -27,22 +30,25 @@ const Home:React.FC<IComponent>=({isHeaderEnabled})=>{
   },[])
 
   useEffect(()=>{
-  },[product])
+    if(!userData){
+      navigate('/auth')
+    }
+  },[])
     return(
         <div>
           <div className="productContainer">
             {product && product.map((el:IProduct)=>
             <ProductTile
               className="productTile"
-              key={el.id}
-              imgSrc={el.images!}
+              key={el._id}
+              imgSrc={el.imagesUrl!}
               name={el.name}
               brand={el.brand}
               price={el.price}
               mrp={el.mrp}
               offer={el.offer}
               btnText={'ADD TO CART'}
-              productId={el.id}
+              productId={el._id}
             />
             )}
           </div>
